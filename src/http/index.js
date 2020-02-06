@@ -10,12 +10,11 @@ const config = {
     }
     // const config = {
     //     host: "https://api.xygeng.cn",
-    //     listUrl: "/novel/index.php?type=all",
-    //     infoUrl: "/novel/index.php?type=info",
-    //     chaptersUrl: "/novel/index.php?type=list",
-    //     ContentUrl: "/novel/index.php?type=content"
-
-// }
+    //     listUrl: "/novel/api/all.php",
+    //     infoUrl: "/novel/api/info.php",
+    //     chaptersUrl: "/novel/api/list.php",
+    //     ContentUrl: "/novel/api/content.php"
+    // }
 
 const get = (url, data) => {
     return new Promise((resolve, reject) => {

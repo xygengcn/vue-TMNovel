@@ -4,49 +4,44 @@ import http from '../http'
 Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
-        List: [],
-        Content: {},
-
+        nowInfo: {},
+        hisInfo: [],
+        hisList: []
     },
     mutations: {
-        setList(state, list) {
-            state.List = list;
+        setNowInfo(state, item) {
+            state.nowInfo = item;
         },
-        setInfo(state, data) {
-            state.Info = data;
+        setHisInfo(state) {
+            state.hisInfo.push(state.nowInfo);
+            // sessionStorage.setItem("hisInfo", JSON.stringify(state.hisInfo));
         },
-        setContent(state, data) {
-            state.Content = data;
-        },
-        setChapters(state, data) {
-            state.Chapters = data;
-        },
-        setIsloading(state, is) {
-            state.isloading = is;
+        setHisList(state, list) {
+            state.hisList = list;
         }
     },
     actions: {
-        loadList(state) {
+        getList(state) {
             http.get(http.config.listUrl, { params: {} }).then((res) => {
-                state.commit('setList', res);
+                state.commit('setHisList', res);
                 sessionStorage.setItem("list", JSON.stringify(res));
             }, (err) => {
                 console.log(err)
             });
         },
-        loadInfo(state, url) {
-            state.commit('setIsloading', true);
-
+        getInfo(store) {
+            console.log(store.state.hisList);
+            console.log(store.state.nowInfo);
+            console.log(store.state.hisInfo);
         },
-        loadContent(state, url) {
-            state.commit('setIsloading', true);
-            http.get(http.config.ContentUrl, { params: { url: url } }).then((res) => {
-                state.commit('setContent', res);
-                state.commit('setIsloading', false);
-            }, (err) => {
-                console.log(err)
+        getHistory(store, url) {
+            var history = store.state.hisInfo;
+            let info = history.filter(function(item) {
+                return item.url == url;
             });
+            return info;
         }
+
     }
 })
 

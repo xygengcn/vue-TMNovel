@@ -51,7 +51,7 @@ export default {
     },
     onSelect(item) {
       this.show = false;
-      this.linkTo("chapters", this.nowRead.catalogue);
+      this.linkTo("chapters");
     },
     load(url) {
       var _this = this;

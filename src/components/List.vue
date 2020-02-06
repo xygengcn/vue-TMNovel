@@ -17,7 +17,7 @@ export default {
   },
   computed: {
     data() {
-      return this.$store.state.List;
+      return this.$store.state.hisList;
     }
   },
   methods: {
@@ -41,8 +41,8 @@ export default {
   created() {
     var data = sessionStorage.getItem("list");
     data
-      ? this.$store.commit("setList", JSON.parse(data))
-      : this.$store.dispatch("loadList");
+      ? this.$store.commit("setHisList", JSON.parse(data))
+      : this.$store.dispatch("getList");
   }
 };
 </script>

@@ -15,7 +15,7 @@
       <div class="info" v-if="!isloading">
         <van-row>
           <van-col span="7">
-            <van-image fit="cover" :src="data.image" />
+            <van-image fit="cover" :src="data.image|validateImage" />
           </van-col>
           <van-col span="16" offset="1">
             <div class="more">
@@ -42,33 +42,72 @@ export default {
   components: {},
   data() {
     return {
-      data: {},
       isloading: true
     };
   },
-  computed: {},
+  computed: {
+    data() {
+      return this.$store.state.nowInfo;
+    }
+  },
   watch: {},
+  filters: {
+    validateImage: function(pathImg) {
+      var ImgObj = new Image();
+      ImgObj.src = pathImg;
+      if (ImgObj.fileSize > 0 || (ImgObj.width > 0 && ImgObj.height > 0)) {
+        return pathImg;
+      } else {
+        return require("@/assets/default.jpg");
+      }
+    }
+  },
   methods: {
     onClickLeft() {
       this.$router.push("/");
     },
     onClickRight() {
       this.$router.push({ name: "chapters", query: { url: this.data.url } });
+    },
+    load() {
+      var _this = this;
+      this.http
+        .get(this.http.config.infoUrl, {
+          params: { url: this.$route.query.url }
+        })
+        .then(
+          res => {
+            // _this.data = res;
+            _this.$store.commit("setNowInfo", res);
+            _this.$store.commit("setHisInfo", res);
+            _this.isloading = false;
+          },
+          err => {
+            console.log(err);
+          }
+        );
+    },
+    getHistory(url) {
+      var history = this.$store.state.hisInfo;
+      let info = history.filter(function(item) {
+        return item.url == url;
+      });
+      return info;
     }
   },
   created() {
-    var _this = this;
-    this.http
-      .get(this.http.config.infoUrl, { params: { url: this.$route.query.url } })
-      .then(
-        res => {
-          _this.data = res;
-          _this.isloading = false;
-        },
-        err => {
-          console.log(err);
-        }
-      );
+    if (this.$route.query.url == null) {
+      this.isloading = false;
+    } else {
+      let info = this.getHistory(this.$route.query.url);
+      console.log(info);
+      if (info.length > 0) {
+        this.$store.commit("setNowInfo", info[0]);
+        this.isloading = false;
+      } else {
+        this.load();
+      }
+    }
   }
 };
 </script>

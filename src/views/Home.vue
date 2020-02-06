@@ -20,7 +20,7 @@ export default {
   components: {
     List
   },
-  beforeMount() {}
+  created() {}
 };
 </script>
 <style scoped>

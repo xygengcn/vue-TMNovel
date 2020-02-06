@@ -19,13 +19,16 @@ export default {
   data() {
     //这里存放数据
     return {
-      isloading: true,
-      finished: false,
-      data: []
+      isloading: false,
+      finished: true
     };
   },
   //监听属性 类似于data概念
-  computed: {},
+  computed: {
+    data() {
+      return this.$store.state.nowInfo.chapters;
+    }
+  },
   methods: {
     onLoad() {},
     linkTo(url) {
@@ -38,23 +41,7 @@ export default {
       });
     }
   },
-  created() {
-    var _this = this;
-    this.http
-      .get(this.http.config.chaptersUrl, {
-        params: { url: this.$route.query.url }
-      })
-      .then(
-        res => {
-          _this.data = res;
-          _this.isloading = false;
-          _this.finished = true;
-        },
-        err => {
-          console.log(err);
-        }
-      );
-  }
+  created() {}
 };
 </script>
 <style scoped>

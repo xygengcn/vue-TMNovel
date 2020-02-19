@@ -13,19 +13,13 @@ const routes = [{
         path: '/info',
         name: 'info',
         component: () =>
-            import ('../views/Info.vue')
-    },
-    {
-        path: '/chapters',
-        name: 'chapters',
-        component: () =>
-            import ('../views/Chapters.vue')
+            import('../views/Info.vue')
     },
     {
         path: '/content',
         name: 'content',
         component: () =>
-            import ('../views/Content.vue'),
+            import('../views/Content.vue'),
 
     }
 ]
@@ -35,7 +29,10 @@ const router = new VueRouter({
     base: process.env.BASE_URL,
     routes,
     scrollBehavior(to, from, savedPosition) {
-        return { x: 0, y: 0 }
+        return {
+            x: 0,
+            y: 0
+        }
     }
 })
 

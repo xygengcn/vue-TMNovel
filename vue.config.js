@@ -18,5 +18,19 @@ module.exports = {
         // 查阅 https://github.com/vuejs/vue-doc-zh-cn/vue-cli/cli-service.md#配置代理
         proxy: null, // string | Object
         before: app => {}
-    }
+    },
+    pwa: {
+        name: 'TM小说',
+        themeColor: '#5eace0',
+        msTileColor: '#000000',
+        appleMobileWebAppCapable: 'yes',
+        appleMobileWebAppStatusBarStyle: 'black',
+        iconPaths: {
+            favicon32: 'img/icons/32.png',
+            favicon16: 'img/icons/16.png',
+            appleTouchIcon: 'img/icons/logo.png',
+            maskIcon: 'img/icons/logo.svg',
+            msTileImage: 'img/icons/64.png'
+        }
+    },
 }

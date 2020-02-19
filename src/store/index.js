@@ -22,7 +22,9 @@ const store = new Vuex.Store({
     },
     actions: {
         getList(state) {
-            http.get(http.config.listUrl, { params: {} }).then((res) => {
+            http.get(http.config.listUrl, {
+                params: {}
+            }).then((res) => {
                 state.commit('setHisList', res);
                 sessionStorage.setItem("list", JSON.stringify(res));
             }, (err) => {
@@ -36,7 +38,7 @@ const store = new Vuex.Store({
         },
         getHistory(store, url) {
             var history = store.state.hisInfo;
-            let info = history.filter(function(item) {
+            let info = history.filter(function (item) {
                 return item.url == url;
             });
             return info;
